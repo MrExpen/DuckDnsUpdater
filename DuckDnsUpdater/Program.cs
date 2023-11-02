@@ -19,7 +19,12 @@ while (true)
 {
     var success = await client.UpdateDnsRecordsAsync(domains);
 
-    Console.WriteLine("duckdns update " + (success ? "ok" : "failed"));
+    if (success)
+        Console.WriteLine("duckdns update ok");
+
+    else
+        Console.WriteLine("duckdns update failed");
+
 
     await Task.Delay(TimeSpan.FromMinutes(5));
 }
