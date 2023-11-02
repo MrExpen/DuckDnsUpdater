@@ -11,13 +11,13 @@ if (string.IsNullOrWhiteSpace(token))
 if (string.IsNullOrWhiteSpace(domains))
     throw new ArgumentException(nameof(domains));
 
-var client = new DuckDnsClient(token);
+var client = new DuckDnsClient(token, domains);
 
 #endregion
 
 while (true)
 {
-    var success = await client.UpdateDnsRecordsAsync(domains);
+    var success = await client.UpdateDnsRecordsAsync();
 
     if (success)
         Console.WriteLine("duckdns update ok");
