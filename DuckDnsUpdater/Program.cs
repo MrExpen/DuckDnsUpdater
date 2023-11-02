@@ -11,7 +11,7 @@ if (string.IsNullOrWhiteSpace(token))
 if (string.IsNullOrWhiteSpace(domains))
     throw new ArgumentException(nameof(domains));
 
-var client = new DuckDnsClient(token, domains);
+using var client = new DuckDnsClient(token, domains);
 
 #endregion
 
