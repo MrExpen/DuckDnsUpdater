@@ -4,10 +4,10 @@ public class DuckDnsClient : IDisposable
 {
     private const string BaseAddress = "https://www.duckdns.org";
     private const string OkString = "OK";
-    
+
     private readonly HttpClientCacher _httpClientCacher = new();
 
-    private readonly string _url;
+    private readonly Uri _uri;
 
     /// <summary>
     /// конструктор класса
@@ -16,7 +16,7 @@ public class DuckDnsClient : IDisposable
     /// <param name="domains">домены на обновление</param>
     public DuckDnsClient(string token, string domains)
     {
-        _url = $"{BaseAddress}/update?domains={domains}&token={token}";
+        _uri = new Uri($"{BaseAddress}/update?domains={domains}&token={token}");
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public class DuckDnsClient : IDisposable
     {
         try
         {
-            var result = await _httpClientCacher.HttpClient.GetStringAsync(_url);
+            var result = await _httpClientCacher.HttpClient.GetStringAsync(_uri);
 
             return string.Equals(result, OkString, StringComparison.OrdinalIgnoreCase);
         }
@@ -37,7 +37,7 @@ public class DuckDnsClient : IDisposable
             return false;
         }
     }
-    
+
     public void Dispose()
     {
         _httpClientCacher.Dispose();
